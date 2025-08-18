@@ -1,6 +1,6 @@
 import { useState } from 'react'; // --- NEW: Import the useState hook
 
-function TransactionForm() {
+function TransactionForm({ onAddTransaction }) {
   // --- NEW: Create state variables for each input ---
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -10,10 +10,19 @@ function TransactionForm() {
   const handleSubmit = (event) => {
     // Prevent the default browser behavior of reloading the page
     event.preventDefault();
+    
+    const newTransaction = { description, amount: parseFloat(amount), category, type };
+    
+    onAddTransaction(newTransaction);
+    
+    setDescription('');
+    setAmount('');
+    setCategory('');
+    setType('expense'); // Reset type to default
 
     // Log the current state values to the console
-    console.log('--- Submitting New Transaction ---');
-    console.log({ description, amount, category, type });
+    //console.log('--- Submitting New Transaction ---');
+    //console.log({ description, amount, category, type });
   };
 
   return (
